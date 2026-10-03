@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ action }} Student</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+
+        <div class="logo">
+            Student Management System
+        </div>
+
+        <div class="nav-links">
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+
+    </nav>
+
+
+    <!-- Form Container -->
+    <main class="form-container">
+
+        <div class="form-card">
+
+            <h1>{{ action }} Student</h1>
+
+            <p>
+                Enter the student's information below.
+            </p>
+
+
+            <!-- Messages -->
+            {% with messages = get_flashed_messages() %}
+
+                {% if messages %}
+
+                    <div class="message">
+
+                        {% for message in messages %}
+                            <p>{{ message }}</p>
+                        {% endfor %}
+
+                    </div>
+
+                {% endif %}
+
+            {% endwith %}
+
+
+            <form
+                method="POST"
+                id="studentForm"
+                onsubmit="return validateStudentForm()"
+            >
+
+                <!-- Student ID -->
+                <div class="form-group">
+
+                    <label for="student_id">
+                        Student ID
+                    </label>
+
+                    <input
+                        type="text"
+                        id="student_id"
+                        name="student_id"
+                        value="{{ student['student_id'] if student else '' }}"
+                        placeholder="e.g. ST001"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Full Name -->
+                <div class="form-group">
+
+                    <label for="full_name">
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="full_name"
+                        name="full_name"
+                        value="{{ student['full_name'] if student else '' }}"
+                        placeholder="Enter full name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Email -->
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value="{{ student['email'] if student else '' }}"
+                        placeholder="student@example.com"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Programme -->
+                <div class="form-group">
+
+                    <label for="program">
+                        Programme
+                    </label>
+
+                    <select
+                        id="program"
+                        name="program"
+                        required
+                    >
+
+                        <option value="">
+                            Select Programme
+                        </option>
+
+                        <option value="Computer Science"
+                            {% if student and student['program'] == 'Computer Science' %}selected{% endif %}>
+                            Computer Science
+                        </option>
+
+                        <option value="Information Technology"
+                            {% if student and student['program'] == 'Information Technology' %}selected{% endif %}>
+                            Information Technology
+                        </option>
+
+                        <option value="Education"
+                            {% if student and student['program'] == 'Education' %}selected{% endif %}>
+                            Education
+                        </option>
+
+                        <option value="Business Studies"
+                            {% if student and student['program'] == 'Business Studies' %}selected{% endif %}>
+                            Business Studies
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Marks -->
+                <div class="form-group">
+
+                    <label for="marks">
+                        Marks
+                    </label>
+
+                    <input
+                        type="number"
+                        id="marks"
+                        name="marks"
+                        min="0"
+                        max="100"
+                        step="0.01"
+                        value="{{ student['marks'] if student else '' }}"
+                        placeholder="Enter marks (0-100)"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Buttons -->
+                <div class="form-buttons">
+
+                    <button type="submit" class="btn">
+                        {{ action }} Student
+                    </button>
+
+                    <a
+                        href="{{ url_for('dashboard') }}"
+                        class="cancel-btn"
+                    >
+                        Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            Educational Student Management System |
+            Assignment 2
+        </p>
+
+    </footer>
+
+</body>
+
+</html>
