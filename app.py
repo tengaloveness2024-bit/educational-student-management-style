@@ -75,15 +75,23 @@ def login_required(function):
 
 @app.route("/")
 def home():
-    return
-render_template("home.html")
+    return render_template("home.html")
 
-@app.route("/login", methods=["GET",
-"POST"])
+
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    if request.method =="POST":
-          return
-render_template("login.html")
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+
+        # Simple login
+        if username == "admin" and password == "admin123":
+            return redirect(url_for("dashboard"))
+
+        return render_template("login.html", error="Invalid username or password")
+
+    return render_template("login.html")
+
 
     if request.method == "POST":
 
