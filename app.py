@@ -78,9 +78,11 @@ def home():
     return
 render_template("home.html")
 
-@app.route("/login"
+@app.route("/login", methods=["GET",
+"POST"])
 def login():
-   return
+    if request.method =="POST":
+          return
 render_template("login.html")
 
     if request.method == "POST":
